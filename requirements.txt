@@ -1,0 +1,163 @@
+npm install express
+npm install sqlite
+npm install sqlite3
+npm install -g nodemon
+
+
+-- Create author table
+CREATE TABLE IF NOT EXISTS author (
+  author_id INTEGER PRIMARY KEY,
+  name TEXT,
+  birth_place TEXT,
+  birth_date TEXT,
+  genre TEXT,
+  followers_count INT,
+  about_author TEXT
+);
+
+-- Insert sample author data
+INSERT INTO author (name, birth_place, birth_date, genre, followers_count, about_author)
+VALUES 
+    ('Stephenie Meyer', 'Connecticut, The United States', '1973-12-24', 'Science Fiction & Fantasy, Paranormal Romance, Young Adult', 1000000, 'Stephenie Meyer is the author of the Twilight series.'),
+    ('J.K. Rowling', 'Yate, Gloucestershire, England', '1965-07-31', 'Fantasy, Mystery, Young Adult', 5000000, 'J.K. Rowling is the author of the Harry Potter series.'),
+    ('George R.R. Martin', 'Bayonne, New Jersey, United States', '1948-09-20', 'Fantasy, Science Fiction', 3000000, 'George R.R. Martin is the author of the A Song of Ice and Fire series.'),
+    ('J.R.R. Tolkien', 'Bloemfontein, Orange Free State (now Free State), South Africa', '1892-01-03', 'Fantasy, Adventure', 2000000, 'J.R.R. Tolkien is the author of The Lord of the Rings series.'),
+    ('Agatha Christie', 'Torquay, Devon, England', '1890-09-15', 'Mystery, Thriller', 1500000, 'Agatha Christie is known for her detective novels, including the famous Hercule Poirot and Miss Marple series.'),
+    ('Dan Brown', 'Exeter, New Hampshire, United States', '1964-06-22', 'Mystery, Thriller', 2000000, 'Dan Brown is the author of the Robert Langdon series, including The Da Vinci Code.'),
+    ('Suzanne Collins', 'Hartford, Connecticut, United States', '1962-08-10', 'Science Fiction, Dystopian, Young Adult', 2500000, 'Suzanne Collins is the author of The Hunger Games series.'),
+    ('Veronica Roth', 'New York City, New York, United States', '1988-08-19', 'Science Fiction, Dystopian, Young Adult', 1500000, 'Veronica Roth is the author of the Divergent series.'),
+    ('J.D. Salinger', 'New York City, New York, United States', '1919-01-01', 'Literary Fiction', 1000000, 'J.D. Salinger is the author of The Catcher in the Rye.'),
+    ('Harper Lee', 'Monroeville, Alabama, United States', '1926-04-28', 'Literary Fiction', 2000000, 'Harper Lee is the author of To Kill a Mockingbird.'),
+    ('F. Scott Fitzgerald', 'St. Paul, Minnesota, United States', '1896-09-24', 'Literary Fiction', 1500000, 'F. Scott Fitzgerald is the author of The Great Gatsby.'),
+    ('Ernest Hemingway', 'Oak Park, Illinois, United States', '1899-07-21', 'Literary Fiction', 2500000, 'Ernest Hemingway is known for his novels such as The Old Man and the Sea and A Farewell to Arms.'),
+    ('Leo Tolstoy', 'Yasnaya Polyana, Tula Governorate, Russian Empire', '1828-09-09', 'Literary Fiction', 3000000, 'Leo Tolstoy is the author of War and Peace and Anna Karenina.'),
+    ('Jane Austen', 'Steventon, Hampshire, England', '1775-12-16', 'Literary Fiction, Romance', 4000000, 'Jane Austen is known for her novels including Pride and Prejudice and Sense and Sensibility.'),
+    ('Mark Twain', 'Florida, Missouri, United States', '1835-11-30', 'Literary Fiction, Adventure', 3500000, 'Mark Twain is the author of Adventures of Huckleberry Finn and The Adventures of Tom Sawyer.'),
+    ('Charles Dickens', 'Portsmouth, England', '1812-02-07', 'Literary Fiction', 4500000, 'Charles Dickens is known for his novels such as A Tale of Two Cities and Great Expectations.'),
+    ('Emily Brontë', 'Thornton, West Yorkshire, England', '1818-07-30', 'Literary Fiction, Romance', 1500000, 'Emily Brontë is the author of Wuthering Heights.'),
+    ('Charlotte Brontë', 'Thornton, West Yorkshire, England', '1816-04-21', 'Literary Fiction, Romance', 2000000, 'Charlotte Brontë is the author of Jane Eyre.'),
+    ('Homer', 'Ionia, Ancient Greece', '8th century BC', 'Epic Poetry', 500000, 'Homer is the author of the epic poems The Iliad and The Odyssey.'),
+    ('William Shakespeare', 'Stratford-upon-Avon, Warwickshire, England', '1564-04-23', 'Drama, Poetry', 6000000, 'William Shakespeare is known for his plays such as Romeo and Juliet, Hamlet, and Macbeth.'),
+    ('Mary Shelley', 'London, England', '1797-08-30', 'Gothic Fiction, Science Fiction', 2000000, 'Mary Shelley is the author of Frankenstein.'),
+    ('H.G. Wells', 'Bromley, Kent, England', '1866-09-21', 'Science Fiction', 2000000, 'H.G. Wells is known for his novels The War of the Worlds and The Time Machine.'),
+    ('Arthur Conan Doyle', 'Edinburgh, Scotland', '1859-05-22', 'Mystery, Detective Fiction', 2500000, 'Arthur Conan Doyle is the creator of Sherlock Holmes.'),
+    ('Jules Verne', 'Nantes, France', '1828-02-08', 'Science Fiction, Adventure', 3000000, 'Jules Verne is known as the "Father of Science Fiction" for his novels such as Twenty Thousand Leagues Under the Sea and Around the World in Eighty Days.'),
+    ('Virginia Woolf', 'Kensington, London, England', '1882-01-25', 'Modernist Literature', 1500000, 'Virginia Woolf is known for her novels such as Mrs. Dalloway and To the Lighthouse.'),
+    ('Fyodor Dostoevsky', 'Moscow, Russian Empire', '1821-11-11', 'Literary Fiction', 2000000, 'Fyodor Dostoevsky is the author of Crime and Punishment and The Brothers Karamazov.'),
+    ('Toni Morrison', 'Lorain, Ohio, United States', '1931-02-18', 'Literary Fiction', 2500000, 'Toni Morrison is known for her novels such as Beloved and Song of Solomon.');
+
+-- Create book table
+CREATE TABLE IF NOT EXISTS book (
+  book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT,
+  author_id INT,
+  rating FLOAT,
+  rating_count INT,
+  review_count INT,
+  description TEXT,
+  pages INT,
+  date_of_publication TEXT,
+  edition_language TEXT,
+  price INT,
+  online_stores TEXT,
+  FOREIGN KEY(author_id) REFERENCES author(author_id) ON DELETE CASCADE
+);
+
+-- Insert sample book data
+INSERT INTO book (title, author_id, rating, rating_count, review_count, description, pages, date_of_publication, edition_language, price, online_stores)
+VALUES
+    ('Twilight', 1, 4, 5000000, 250000, 'Twilight is the first book in the Twilight series by Stephenie Meyer.', 498, '2005-10-05', 'English', 15, 'amazon.com'),
+    ('New Moon', 1, 4.1, 4500000, 200000, 'New Moon is the second book in the Twilight series by Stephenie Meyer.', 563, '2006-09-06', 'English', 16, 'amazon.com'),
+    ('Eclipse', 1, 4.2, 4000000, 180000, 'Eclipse is the third book in the Twilight series by Stephenie Meyer.', 629, '2007-08-07', 'English', 17, 'amazon.com'),
+    ('Breaking Dawn', 1, 4.3, 3500000, 160000, 'Breaking Dawn is the fourth and final book in the Twilight series by Stephenie Meyer.', 756, '2008-08-02', 'English', 18, 'amazon.com'),
+    ('Harry Potter and the Philosopher''s Stone', 2, 4.5, 6000000, 300000, 'Harry Potter and the Philosopher''s Stone is the first book in the Harry Potter series by J.K. Rowling.', 309, '1997-06-26', 'English', 20, 'amazon.com'),
+    ('Harry Potter and the Chamber of Secrets', 2, 4.6, 5500000, 280000, 'Harry Potter and the Chamber of Secrets is the second book in the Harry Potter series by J.K. Rowling.', 341, '1998-07-02', 'English', 21, 'amazon.com'),
+    ('Harry Potter and the Prisoner of Azkaban', 2, 4.7, 5000000, 270000, 'Harry Potter and the Prisoner of Azkaban is the third book in the Harry Potter series by J.K. Rowling.', 435, '1999-07-08', 'English', 22, 'amazon.com'),
+    ('Harry Potter and the Goblet of Fire', 2, 4.8, 4500000, 260000, 'Harry Potter and the Goblet of Fire is the fourth book in the Harry Potter series by J.K. Rowling.', 734, '2000-07-08', 'English', 23, 'amazon.com'),
+    ('Harry Potter and the Order of the Phoenix', 2, 4.9, 4000000, 250000, 'Harry Potter and the Order of the Phoenix is the fifth book in the Harry Potter series by J.K. Rowling.', 870, '2003-06-21', 'English', 24, 'amazon.com'),
+    ('Harry Potter and the Half-Blood Prince', 2, 5, 3500000, 240000, 'Harry Potter and the Half-Blood Prince is the sixth book in the Harry Potter series by J.K. Rowling.', 652, '2005-07-16', 'English', 25, 'amazon.com'),
+    ('Harry Potter and the Deathly Hallows', 2, 5, 3000000, 230000, 'Harry Potter and the Deathly Hallows is the seventh and final book in the Harry Potter series by J.K. Rowling.', 759, '2007-07-21', 'English', 26, 'amazon.com'),
+    ('A Game of Thrones', 3, 4.5, 4500000, 200000, 'A Game of Thrones is the first book in the A Song of Ice and Fire series by George R.R. Martin.', 694, '1996-08-06', 'English', 30, 'amazon.com'),
+    ('A Clash of Kings', 3, 4.6, 4000000, 180000, 'A Clash of Kings is the second book in the A Song of Ice and Fire series by George R.R. Martin.', 768, '1998-11-16', 'English', 31, 'amazon.com'),
+    ('A Storm of Swords', 3, 4.7, 3500000, 160000, 'A Storm of Swords is the third book in the A Song of Ice and Fire series by George R.R. Martin.', 973, '2000-10-31', 'English', 32, 'amazon.com'),
+    ('A Feast for Crows', 3, 4.8, 3000000, 150000, 'A Feast for Crows is the fourth book in the A Song of Ice and Fire series by George R.R. Martin.', 753, '2005-11-08', 'English', 33, 'amazon.com'),
+    ('A Dance with Dragons', 3, 4.9, 2500000, 140000, 'A Dance with Dragons is the fifth book in the A Song of Ice and Fire series by George R.R. Martin.', 1040, '2011-07-12', 'English', 34, 'amazon.com'),
+    ('The Hobbit', 4, 4.5, 4000000, 170000, 'The Hobbit is a fantasy novel by J.R.R. Tolkien.', 310, '1937-09-21', 'English', 15, 'amazon.com'),
+    ('The Lord of the Rings: The Fellowship of the Ring', 4, 4.6, 3500000, 160000, 'The Fellowship of the Ring is the first book in The Lord of the Rings series by J.R.R. Tolkien.', 423, '1954-07-29', 'English', 16, 'amazon.com'),
+    ('The Lord of the Rings: The Two Towers', 4, 4.7, 3000000, 150000, 'The Two Towers is the second book in The Lord of the Rings series by J.R.R. Tolkien.', 352, '1954-11-11', 'English', 17, 'amazon.com'),
+    ('The Lord of the Rings: The Return of the King', 4, 4.8, 2500000, 140000, 'The Return of the King is the third book in The Lord of the Rings series by J.R.R. Tolkien.', 416, '1955-10-20', 'English', 18, 'amazon.com'),
+    ('Pride and Prejudice', 14, 4.7, 5000000, 200000, 'Pride and Prejudice is a romantic novel by Jane Austen.', 279, '1813-01-28', 'English', 20, 'amazon.com'),
+    ('Sense and Sensibility', 14, 4.8, 4500000, 180000, 'Sense and Sensibility is a romantic novel by Jane Austen.', 319, '1811-10-30', 'English', 21, 'amazon.com'),
+    ('Mansfield Park', 14, 4.9, 4000000, 160000, 'Mansfield Park is a romantic novel by Jane Austen.', 432, '1814-05-09', 'English', 22, 'amazon.com'),
+    ('Emma', 14, 5, 3500000, 150000, 'Emma is a romantic novel by Jane Austen.', 474, '1815-12-23', 'English', 23, 'amazon.com'),
+    ('Northanger Abbey', 14, 5, 3000000, 140000, 'Northanger Abbey is a romantic novel by Jane Austen.', 287, '1818-12-01', 'English', 24, 'amazon.com'),
+    ('Persuasion', 14, 4.5, 2500000, 130000, 'Persuasion is a romantic novel by Jane Austen.', 249, '1818-12-01', 'English', 25, 'amazon.com'),
+    ('The Great Gatsby', 11, 4.7, 4500000, 190000, 'The Great Gatsby is a novel by F. Scott Fitzgerald.', 218, '1925-04-10', 'English', 18, 'amazon.com'),
+    ('Tender Is the Night', 11, 4.8, 4000000, 170000, 'Tender Is the Night is a novel by F. Scott Fitzgerald.', 317, '1934-04-12', 'English', 19, 'amazon.com'),
+    ('The Beautiful and Damned', 11, 4.9, 3500000, 150000, 'The Beautiful and Damned is a novel by F. Scott Fitzgerald.', 349, '1922-03-05', 'English', 20, 'amazon.com'),
+    ('This Side of Paradise', 11, 5, 3000000, 140000, 'This Side of Paradise is a novel by F. Scott Fitzgerald.', 305, '1920-03-26', 'English', 21, 'amazon.com'),
+    ('The Catcher in the Rye', 9, 4.5, 4500000, 200000, 'The Catcher in the Rye is a novel by J.D. Salinger.', 234, '1951-07-16', 'English', 16, 'amazon.com'),
+    ('Nine Stories', 9, 4.6, 4000000, 180000, 'Nine Stories is a collection of short stories by J.D. Salinger.', 198, '1953-04-10', 'English', 17, 'amazon.com'),
+    ('Franny and Zooey', 9, 4.7, 3500000, 160000, 'Franny and Zooey is a novel by J.D. Salinger.', 201, '1961-01-30', 'English', 18, 'amazon.com'),
+    ('Raise High the Roof Beam, Carpenters and Seymour: An Introduction', 9, 4.8, 3000000, 150000, 'Raise High the Roof Beam, Carpenters and Seymour: An Introduction is a collection of short stories by J.D. Salinger.', 248, '1963-01-01', 'English', 19, 'amazon.com'),
+    ('The Tales of Beedle the Bard', 2, 4.9, 2500000, 140000, 'The Tales of Beedle the Bard is a collection of wizarding fairy tales by J.K. Rowling.', 110, '2008-12-04', 'English', 20, 'amazon.com'),
+    ('Fantastic Beasts and Where to Find Them', 2, 5, 2000000, 130000, 'Fantastic Beasts and Where to Find Them is a guide book written by J.K. Rowling.', 128, '2001-03-01', 'English', 21, 'amazon.com'),
+    ('Quidditch Through the Ages', 2, 5, 1500000, 120000, 'Quidditch Through the Ages is a guide book written by J.K. Rowling.', 106, '2001-03-01', 'English', 22, 'amazon.com'),
+    ('The Casual Vacancy', 2, 4.5, 1000000, 110000, 'The Casual Vacancy is a novel by J.K. Rowling.', 503, '2012-09-27', 'English', 23, 'amazon.com'),
+    ('The Silkworm', 2, 4.6, 800000, 100000, 'The Silkworm is a crime fiction novel by J.K. Rowling.', 449, '2014-06-19', 'English', 24, 'amazon.com'),
+    ('The Cuckoo''s Calling', 2, 4.7, 600000, 90000, 'The Cuckoo''s Calling is a crime fiction novel by J.K. Rowling.', 449, '2013-04-18', 'English', 25, 'amazon.com'),
+    ('The Iliad', 20, 4.5, 1500000, 140000, 'The Iliad is an ancient Greek epic poem by Homer.', 683, '8th century BC', 'Ancient Greek', 15, 'amazon.com'),
+    ('The Odyssey', 20, 4.6, 1400000, 130000, 'The Odyssey is an ancient Greek epic poem by Homer.', 454, '8th century BC', 'Ancient Greek', 16, 'amazon.com'),
+    ('Hamlet', 19, 4.7, 5000000, 170000, 'Hamlet is a tragedy by William Shakespeare.', 289, '1609-01-01', 'English', 17, 'amazon.com'),
+    ('Macbeth', 19, 4.8, 4500000, 180000, 'Macbeth is a tragedy by William Shakespeare.', 210, '1623-01-01', 'English', 18, 'amazon.com'),
+    ('Romeo and Juliet', 19, 4.9, 4000000, 190000, 'Romeo and Juliet is a tragedy by William Shakespeare.', 238, '1597-01-01', 'English', 19, 'amazon.com'),
+    ('Othello', 19, 5, 3500000, 200000, 'Othello is a tragedy by William Shakespeare.', 238, '1622-01-01', 'English', 20, 'amazon.com'),
+    ('Macbeth', 19, 4.5, 3000000, 210000, 'Macbeth is a tragedy by William Shakespeare.', 178, '1623-01-01', 'English', 21, 'amazon.com'),
+    ('A Midsummer Night''s Dream', 19, 4.6, 2500000, 220000, 'A Midsummer Night''s Dream is a comedy by William Shakespeare.', 298, '1600-01-01', 'English', 22, 'amazon.com'),
+    ('Julius Caesar', 19, 4.7, 2000000, 230000, 'Julius Caesar is a tragedy by William Shakespeare.', 158, '1623-01-01', 'English', 23, 'amazon.com'),
+    ('Frankenstein', 21, 4.8, 4000000, 170000, 'Frankenstein; or, The Modern Prometheus is a novel by Mary Shelley.', 280, '1818-01-01', 'English', 15, 'amazon.com'),
+    ('The Last Man', 21, 4.9, 3500000, 180000, 'The Last Man is a post-apocalyptic science fiction novel by Mary Shelley.', 280, '1826-01-01', 'English', 16, 'amazon.com'),
+    ('The Time Machine', 23, 4.5, 3000000, 190000, 'The Time Machine is a science fiction novel by H.G. Wells.', 124, '1895-01-01', 'English', 17, 'amazon.com'),
+    ('The War of the Worlds', 23, 4.6, 2500000, 200000, 'The War of the Worlds is a science fiction novel by H.G. Wells.', 192, '1898-01-01', 'English', 18, 'amazon.com'),
+    ('The Island of Doctor Moreau', 23, 4.7, 2000000, 210000, 'The Island of Doctor Moreau is a science fiction novel by H.G. Wells.', 138, '1896-01-01', 'English', 19, 'amazon.com'),
+    ('The Invisible Man', 23, 4.8, 1500000, 220000, 'The Invisible Man is a science fiction novel by H.G. Wells.', 146, '1897-01-01', 'English', 20, 'amazon.com'),
+    ('Brida', 30, 5, 400000, 410000, 'Brida is a novel by Paulo Coelho.', 241, '1990-01-01', 'English', 43, 'amazon.com');
+
+
+
+
+-- Create user table
+CREATE TABLE IF NOT EXISTS users (
+  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  name TEXT,
+  password,
+  gender TEXT,
+  location TEXT
+);
+
+
+INSERT INTO users (username, name, password, gender, location) VALUES
+('varun156', 'John Doe', 'password1', 'Male', 'New York'),
+('laxmi97', 'Jane Smith', 'password2', 'Female', 'Los Angeles'),
+('balu34', 'Michael Johnson', 'password3', 'Male', 'Chicago'),
+('vamshi46', 'Emily Brown', 'password4', 'Female', 'Houston'),
+('raju98', 'William Davis', 'password5', 'Male', 'Phoenix'),
+('vasu198', 'Emma Wilson', 'password6', 'Female', 'Philadelphia'),
+('harsha56', 'James Taylor', 'password7', 'Male', 'San Antonio'),
+('naresh99', 'Olivia Martinez', 'password8', 'Female', 'San Diego'),
+('balaji67', 'Daniel Anderson', 'password9', 'Male', 'Dallas'),
+('ganesh45', 'Sophia Garcia', 'password10', 'Female', 'San Jose');
+
+
+
+# Execute the SQL command
+cursor.execute(sql_command)
+# Commit the changes
+conn.commit()
+# Close the connection
+conn.close()
+
+
+
+
